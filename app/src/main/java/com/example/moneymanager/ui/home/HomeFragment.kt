@@ -28,6 +28,9 @@ class HomeFragment : Fragment() {
         val textUsername: TextView = root.findViewById(R.id.home_username)
         val textUserEmail: TextView = root.findViewById(R.id.home_user_email)
         val imageHeadPhoto: ImageView = root.findViewById(R.id.home_head_photo)
+        val textTotalIncome: TextView = root.findViewById(R.id.home_total_income)
+        val textTotalOutcome: TextView = root.findViewById(R.id.home_total_outcome)
+        val textTotalMoney: TextView = root.findViewById(R.id.home_total_money)
 
         homeViewModel.user.observe(viewLifecycleOwner,  {
             if (it != null) {
@@ -37,6 +40,9 @@ class HomeFragment : Fragment() {
                     .load(it.getPhotoUri())
                     .circleCrop()
                     .into(imageHeadPhoto)
+                textTotalIncome.text = it.totalBudget.toString()
+                textTotalOutcome.text = it.totalExpense.toString()
+                textTotalMoney.text = (it.totalBudget-it.totalExpense).toString()
             }
         })
 
