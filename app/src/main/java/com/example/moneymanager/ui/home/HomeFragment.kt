@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.moneymanager.MyApplication
@@ -22,7 +23,7 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val userRepository = (requireActivity().application as MyApplication).userRepository
-        homeViewModel = HomeViewModel(userRepository)
+        homeViewModel = ViewModelProvider(this, HomeViewModelFactory(userRepository)).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
         val textUsername: TextView = root.findViewById(R.id.home_username)
