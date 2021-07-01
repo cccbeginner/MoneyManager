@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.moneymanager.model.category.Category
 import com.example.moneymanager.model.user.User
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -97,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             val currentUser = (application as MyApplication).userRepository.getWithInsert(User(username, userEmail, userPhotoUrl.toString()))
             MyApplication.currentUser = currentUser
+
+            val category = Category(currentUser.id!!, "test", Category.Outcome)
+            println(category)
+            //(application as MyApplication).categoryDatabase.getDao().insert(category)
+            //println(category)
         }
         // update ui
         /*val homeUsername = findViewById<TextView>(R.id.home_username)

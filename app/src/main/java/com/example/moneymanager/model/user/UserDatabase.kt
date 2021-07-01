@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.moneymanager.MyApplication
 
-@Database(entities = [User::class], version = 2, exportSchema = false)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class UserDatabase : RoomDatabase(){
     abstract fun getDao(): UserDao
 
@@ -15,9 +15,7 @@ abstract class UserDatabase : RoomDatabase(){
 
         fun getInstance(context: Context): UserDatabase {
             instance ?: synchronized(UserDatabase::class){
-                    instance = Room.databaseBuilder(context, UserDatabase::class.java, MyApplication.databaseName)
-                            .fallbackToDestructiveMigration()
-                            .build()
+                    instance = Room.databaseBuilder(context, UserDatabase::class.java, MyApplication.databaseName).build()
                 }
             return instance!!
         }
