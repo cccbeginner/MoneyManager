@@ -42,8 +42,8 @@ class CategoriesFragment : Fragment() {
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
         private var fragments: ArrayList<Fragment> = arrayListOf(
-            CategoriesOutcomeFragment(),
-            CategoriesIncomeFragment()
+            OutcomeFragment(),
+            IncomeFragment()
         )
 
         override fun getItemCount(): Int {

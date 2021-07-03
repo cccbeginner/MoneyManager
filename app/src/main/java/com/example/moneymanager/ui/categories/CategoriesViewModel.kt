@@ -1,9 +1,6 @@
 package com.example.moneymanager.ui.categories
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.moneymanager.MyApplication
 import com.example.moneymanager.model.category.Category
 import com.example.moneymanager.repository.CategoryRepository
@@ -22,10 +19,14 @@ class CategoriesViewModel(
         }
     }
 
+    val insertOutcomeResult = MutableLiveData<Boolean>()
+    val updateOutcomeResult = MutableLiveData<Boolean>()
+
     fun insertOutcomeCategory(title: String){
         val category = Category(MyApplication.currentUser!!.id!!, title, Category.Outcome)
         viewModelScope.launch {
-            categoryRepository.insert(category)
+            val res = categoryRepository.insert(category)
+            insertOutcomeResult.postValue(res)
         }
     }
 

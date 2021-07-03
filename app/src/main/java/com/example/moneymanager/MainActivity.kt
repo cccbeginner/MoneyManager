@@ -96,23 +96,9 @@ class MainActivity : AppCompatActivity() {
         val userEmail = user.email as String
         val userPhotoUrl = user.photoUrl
         GlobalScope.launch {
-            val currentUser = (application as MyApplication).userRepository.getWithInsert(User(username, userEmail, userPhotoUrl.toString()))
+            val currentUser = (application as MyApplication).userDatabase.getDao().getWithInsert(User(username, userEmail, userPhotoUrl.toString()))
             MyApplication.currentUser = currentUser
-
-            val category = Category(currentUser.id!!, "test", Category.Outcome)
-            println(category)
-            //(application as MyApplication).categoryDatabase.getDao().insert(category)
-            //println(category)
         }
-        // update ui
-        /*val homeUsername = findViewById<TextView>(R.id.home_username)
-        val homeUserEmail = findViewById<TextView>(R.id.home_user_email)
-        val homeHeadPhoto = findViewById<ImageView>(R.id.home_head_photo)
-        homeUsername.text = username
-        homeUserEmail.text = userEmail
-        Glide.with(this)
-            .load(userPhotoUrl)
-            .into(homeHeadPhoto);*/
     }
 
     private fun signOut() {

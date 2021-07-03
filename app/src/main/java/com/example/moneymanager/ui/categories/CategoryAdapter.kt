@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moneymanager.R
 import com.example.moneymanager.model.category.Category
 
-class CategoriesOutcomeAdapter(private var categoryArray: Array<Category>) : RecyclerView.Adapter<CategoriesOutcomeAdapter.ViewHolder>() {
+class CategoryAdapter(private var categoryArray: Array<Category>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

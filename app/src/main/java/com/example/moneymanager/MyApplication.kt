@@ -13,14 +13,12 @@ class MyApplication : Application() {
     // rather than when the application starts
 
     // Declare databases
-    private val userDatabase by lazy { UserDatabase.getInstance(this) }
+    val userDatabase by lazy { UserDatabase.getInstance(this) }
     val categoryDatabase by lazy { CategoryDatabase.getInstance(this) }
 
     // Declare repositories
     val userRepository by lazy { UserRepository(userDatabase.getDao()) }
     val categoryRepository by lazy { CategoryRepository(categoryDatabase.getDao()) }
-
-
 
     companion object{
 
@@ -28,6 +26,6 @@ class MyApplication : Application() {
         var currentUser: User? = null
 
         // Database config
-        const val databaseName = "money_manager.db"
+        const val databaseName = "money_manager1.db"
     }
 }

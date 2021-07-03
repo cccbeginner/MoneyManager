@@ -5,13 +5,10 @@ import androidx.room.*
 @Dao
 interface CategoryDao {
 
-    @Query("INSERT INTO tbl_category VALUES (:id, :userId, :title, :type, :budget, :expense)")
-    fun justInsert(id: Long?, userId: Long, title: String, type: Int, budget: Long, expense: Long)
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun justInsert(category: Category)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.IGNORE)
     fun justUpdate(category: Category)
 
     @Delete
@@ -30,8 +27,7 @@ interface CategoryDao {
     suspend fun insert(category: Category): Boolean{
         val exist: Category? = getTheCategory(category.userId, category.title, category.type)
         return if (exist == null){
-            //justInsert(category)
-            justInsert(category.id, category.userId, category.title, category.type, category.budget, category.expense)
+            justInsert(category)
             true
         }else{
             false
