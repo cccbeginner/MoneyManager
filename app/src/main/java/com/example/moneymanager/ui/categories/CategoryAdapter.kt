@@ -4,11 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneymanager.R
 import com.example.moneymanager.model.category.Category
 
-class CategoryAdapter(private var categoryArray: Array<Category>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+open class CategoryAdapter(private var categoryArray: Array<Category>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
+    lateinit var onClickEvent : OnClickEvent
+
+    interface OnClickEvent{
+        open fun onCategoryClick(category: Category){}
+        open fun onEditClick(category: Category){}
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -17,7 +25,10 @@ class CategoryAdapter(private var categoryArray: Array<Category>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(categoryArray[position])
+        val category = categoryArray[position]
+        holder.btnCategory.text = category.title
+        holder.btnCategory.setOnClickListener{ onClickEvent.onCategoryClick(category) }
+        holder.btnEdit.setOnClickListener { onClickEvent.onEditClick(category) }
     }
 
     override fun getItemCount(): Int {
@@ -25,13 +36,11 @@ class CategoryAdapter(private var categoryArray: Array<Category>) : RecyclerView
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        private val btnCategory: Button = itemView.findViewById(R.id.categories_category)
-        fun bind(category: Category){
-            btnCategory.text = category.title
-        }
+        val btnCategory: Button = itemView.findViewById(R.id.categories_btn_category)
+        val btnEdit: ImageButton = itemView.findViewById(R.id.categories_btn_edit)
     }
 
-    fun changeData(newCategoryArray: Array<Category>){
+    fun updateData(newCategoryArray: Array<Category>){
         this.categoryArray = newCategoryArray
         notifyDataSetChanged()
     }
