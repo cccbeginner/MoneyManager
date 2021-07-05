@@ -13,7 +13,11 @@ class OutcomeViewModel(
 
     val insertResult = MutableLiveData<Boolean>()
     val updateResult = MutableLiveData<Boolean>()
-    lateinit var selectCategory: Category
+    private lateinit var selectedCategory: Category
+
+    fun selectCategory(category: Category){
+        selectedCategory = category
+    }
 
     fun insertCategory(title: String){
         val category = Category(MyApplication.currentUser!!.id!!, title, Category.Outcome)
@@ -24,15 +28,15 @@ class OutcomeViewModel(
     }
 
     fun updateCategory(title: String){
-        selectCategory.title = title
+        selectedCategory.title = title
         viewModelScope.launch {
-            val res = categoryRepository.update(selectCategory)
+            val res = categoryRepository.update(selectedCategory)
             updateResult.postValue(res)
         }
     }
     fun deleteCategory(){
         viewModelScope.launch {
-            categoryRepository.delete(selectCategory)
+            categoryRepository.delete(selectedCategory)
         }
     }
 }

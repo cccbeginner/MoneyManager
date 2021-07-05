@@ -12,7 +12,7 @@ interface CategoryDao {
     fun justUpdate(category: Category)
 
     @Delete
-    fun delete(category: Category)
+    suspend fun delete(category: Category)
 
     @Query("SELECT * FROM tbl_category WHERE _id = :id")
     fun getById(id: Long): Category?

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,16 +82,17 @@ class OutcomeFragment : Fragment() {
     ) : CategoryAdapter.OnClickEvent {
 
         override fun onCategoryClick(category: Category) {
+            outcomeViewModel.selectCategory(category)
             TODO("Not yet implemented")
         }
 
         override fun onEditClick(category: Category) {
-            outcomeViewModel.selectCategory = category
+            outcomeViewModel.selectCategory(category)
             dialog.updateDialog(context)
         }
     }
 
-    class Dialog(private val categoriesViewModel: OutcomeViewModel){
+    class Dialog(private val outcomeViewModel: OutcomeViewModel){
 
         fun insertDialog(context: Context) {
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
@@ -102,7 +104,7 @@ class OutcomeFragment : Fragment() {
                 if (title == ""){
                     ToastResponse.cancel(context)
                 }else{
-                    categoriesViewModel.insertCategory(title)
+                    outcomeViewModel.insertCategory(title)
                 }
             }
             builder.setNegativeButton("取消") { _, _ ->
@@ -113,21 +115,30 @@ class OutcomeFragment : Fragment() {
 
         fun updateDialog(context: Context) {
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            val editText = EditText(context) //final一個editText
-            builder.setView(editText)
-            builder.setTitle("名稱")
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_category_edit, null)
+            val editText: EditText = view.findViewById(R.id.category_edit)
+            val deleteButton: ImageButton = view.findViewById(R.id.category_btn_delete)
+
+            builder.setView(view)
+            builder.setTitle("新的名稱")
             builder.setPositiveButton("確定") { _, _ ->
                 val title = editText.text.toString().replace("\\s+".toRegex(), "")
                 if (title == ""){
                     ToastResponse.cancel(context)
                 }else{
-                    categoriesViewModel.updateCategory(title)
+                    outcomeViewModel.updateCategory(title)
                 }
             }
             builder.setNegativeButton("取消") { _, _ ->
                 ToastResponse.cancel(context)
             }
-            builder.create().show()
+
+            val dialog = builder.create()
+            deleteButton.setOnClickListener{
+                dialog.cancel()
+                outcomeViewModel.deleteCategory()
+            }
+            dialog.show()
         }
     }
 }
