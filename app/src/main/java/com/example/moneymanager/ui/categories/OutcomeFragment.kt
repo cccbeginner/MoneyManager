@@ -136,9 +136,21 @@ class OutcomeFragment : Fragment() {
             val dialog = builder.create()
             deleteButton.setOnClickListener{
                 dialog.cancel()
-                outcomeViewModel.deleteCategory()
+                alertDeleteDialog(context)
             }
             dialog.show()
+        }
+
+        private fun alertDeleteDialog(context: Context){
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle("確認刪除？將會連同此類別下的子類別和相關資料一併刪除！")
+            builder.setPositiveButton("確定") { _, _ ->
+                outcomeViewModel.deleteCategory()
+            }
+            builder.setNegativeButton("取消") { _, _ ->
+                ToastResponse.cancel(context)
+            }
+            builder.create().show()
         }
     }
 }
