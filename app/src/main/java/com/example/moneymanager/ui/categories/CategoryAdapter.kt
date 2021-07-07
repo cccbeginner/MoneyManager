@@ -14,8 +14,8 @@ open class CategoryAdapter(private var categoryArray: Array<Category>) : Recycle
     lateinit var onClickEvent : OnClickEvent
 
     interface OnClickEvent{
-        open fun onCategoryClick(category: Category){}
-        open fun onEditClick(category: Category){}
+        fun onCategoryClick(category: Category){}
+        fun onEditClick(category: Category){}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +28,7 @@ open class CategoryAdapter(private var categoryArray: Array<Category>) : Recycle
         val category = categoryArray[position]
         holder.btnCategory.text = category.title
         holder.btnCategory.setOnClickListener{ onClickEvent.onCategoryClick(category) }
-        holder.btnEdit.setOnClickListener { onClickEvent.onEditClick(category) }
+        holder.btnEditCategory.setOnClickListener { onClickEvent.onEditClick(category) }
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +37,7 @@ open class CategoryAdapter(private var categoryArray: Array<Category>) : Recycle
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val btnCategory: Button = itemView.findViewById(R.id.categories_btn_category)
-        val btnEdit: ImageButton = itemView.findViewById(R.id.categories_btn_edit)
+        val btnEditCategory: ImageButton = itemView.findViewById(R.id.categories_btn_edit_category)
     }
 
     fun updateData(newCategoryArray: Array<Category>){

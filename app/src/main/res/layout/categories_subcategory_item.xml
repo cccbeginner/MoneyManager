@@ -7,12 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
-        android:id="@+id/categories_btn_category"
+        android:id="@+id/categories_btn_subcategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category_1"
+        android:text="Subategory_1"
         android:gravity="start"
-        android:backgroundTint="#fff"
+        android:backgroundTint="#bbb"
         android:textColor="#000"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,14 +20,14 @@
     </Button>
 
     <ImageButton
-        android:id="@+id/categories_btn_edit_category"
+        android:id="@+id/categories_btn_edit_subcategory"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:elevation="2dp"
-        android:backgroundTint="#fff"
+        android:backgroundTint="#bbb"
         android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintTop_toTopOf="@+id/categories_btn_category"
-        app:layout_constraintEnd_toEndOf="@+id/categories_btn_category"
+        app:layout_constraintTop_toTopOf="@+id/categories_btn_subcategory"
+        app:layout_constraintEnd_toEndOf="@+id/categories_btn_subcategory"
         android:contentDescription="EDIT" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.moneymanager.model.category.Category
 import com.example.moneymanager.model.user.User
+import com.example.moneymanager.repository.UserRepository
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity() {
         val userEmail = user.email as String
         val userPhotoUrl = user.photoUrl
         GlobalScope.launch {
-            val currentUser = (application as MyApplication).userDatabase.getDao().getWithInsert(User(username, userEmail, userPhotoUrl.toString()))
-            MyApplication.currentUser = currentUser
+            val currentUser = (application as MyApplication).userRepository.getWithInsert(User(username, userEmail, userPhotoUrl.toString()))
+            (application as MyApplication).userRepository.setCurrentUser(currentUser)
         }
     }
 

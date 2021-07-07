@@ -18,13 +18,14 @@ abstract class UserDatabase : RoomDatabase(){
         fun getInstance(context: Context): UserDatabase {
             instance ?: synchronized(UserDatabase::class){
                     instance = Room.databaseBuilder(context, UserDatabase::class.java, MyApplication.databaseName)
-                        .addMigrations(MIGRATION)
+                        .addMigrations(MIGRATION_2_1)
+                        .addMigrations(MIGRATION_3_1)
                         .build()
                 }
             return instance!!
         }
 
-        var MIGRATION: Migration = object : Migration(2, 1) {
+        private var MIGRATION_2_1: Migration = object : Migration(2, 1) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 /*database.execSQL("CREATE TABLE tbl_user (\n" +
                         "\t_id INTEGER PRIMARY KEY,\n" +
@@ -34,6 +35,10 @@ abstract class UserDatabase : RoomDatabase(){
                         "\ttotalBudget INTEGER NOT NULL,\n" +
                         "\ttotalExpense INTEGER NOT NULL\n" +
                         ");")*/
+            }
+        }
+        private var MIGRATION_3_1: Migration = object : Migration(3, 1) {
+            override fun migrate(database: SupportSQLiteDatabase) {
             }
         }
     }

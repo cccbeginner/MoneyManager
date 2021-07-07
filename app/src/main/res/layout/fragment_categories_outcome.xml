@@ -1,20 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".ui.categories.OutcomeFragment">
 
-    <Button
-        android:id="@+id/categories_outcome_insert_button"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="+新增類別"/>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categories_outcome_recyclerview"
-        android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_outcome_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categories_outcome_insert_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="＋新增類別"
+            android:textColor="#bbb"
+            android:backgroundTint="#fff"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categories_outcome_insert_button"/>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subcategories_outcome_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/subcategories_outcome_insert_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="＋新增子類別"
+            android:textColor="#bbb"
+            android:backgroundTint="#fff"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

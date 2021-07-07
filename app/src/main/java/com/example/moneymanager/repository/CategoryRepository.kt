@@ -1,51 +1,33 @@
 package com.example.moneymanager.repository
 
-import com.example.moneymanager.MyApplication
 import com.example.moneymanager.model.category.Category
 import com.example.moneymanager.model.category.CategoryDao
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class CategoryRepository(private val categoryDao: CategoryDao) {
 
-    var currentOutcomeCategories: Array<Category> = emptyArray()
-    var currentIncomeCategories: Array<Category> = emptyArray()
-
-    val currentIncomeCategoriesFlow = flow{
-        while(true){
-            MyApplication.currentUser?.let {
-                emit(currentIncomeCategories)
-            }
-            delay(1000)
-        }
+    val currentIncomeCategoriesFlow = MutableStateFlow{
+        emptyArray<Category>()
+    }
+    val currentOutcomeCategoriesFlow = MutableStateFlow{
+        emptyArray<Category>()
     }
 
-    val currentOutcomeCategoriesFlow = flow{
-        while(true){
-            MyApplication.currentUser?.let {
-                emit(currentOutcomeCategories)
-            }
-            delay(1000)
-        }
-    }
-
-    init {
-        fetchData(Category.Income)
-        fetchData(Category.Outcome)
-    }
-
-    private fun fetchData(type: Int){
+    fun fetchData(type: Int){
         GlobalScope.launch {
             when(type) {
-                Category.Income ->
-                    currentIncomeCategories =
-                        categoryDao.getByType(MyApplication.currentUser!!.id!!, Category.Income)
-                Category.Outcome ->
-                    currentOutcomeCategories =
-                        categoryDao.getByType(MyApplication.currentUser!!.id!!, Category.Outcome)
+                Category.Income -> {
+                    val incomeCategories =
+                        categoryDao.getByType(UserRepository.currentUser!!.id!!, Category.Income)
+                    currentIncomeCategoriesFlow.emit { incomeCategories }
+                }
+                Category.Outcome -> {
+                    val outcomeCategories =
+                        categoryDao.getByType(UserRepository.currentUser!!.id!!, Category.Outcome)
+                    currentOutcomeCategoriesFlow.emit { outcomeCategories }
+                }
             }
         }.start()
     }
@@ -63,5 +45,10 @@ class CategoryRepository(private val categoryDao: CategoryDao) {
     suspend fun delete(category: Category){
         categoryDao.delete(category)
         fetchData(category.type)
+    }
+
+    companion object{
+        var currentIncomeCategory: Category? = null
+        var currentOutcomeCategory: Category? = null
     }
 }
